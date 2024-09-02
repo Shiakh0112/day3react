@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dynamic Hobbies Form</title>
+</head>
+
+<body>
+  <div id="root"></div>
+</body>
+
+<script src="https://www.unpkg.com/react@18.2.0/umd/react.development.js"></script>
+<script src="https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+  const DynamicHobbiesForm = () => {
+    const [hobbies, setHobbies] = React.useState([""]);
+
+    // Function to handle hobby input change
+    const handleHobbyChange = (index, event) => {
+      const newHobbies = [...hobbies];
+      newHobbies[index] = event.target.value;
+      setHobbies(newHobbies);
+    };
+
+    // Function to add a new hobby input field
+    const addHobbyField = () => {
+      setHobbies([...hobbies, ""]);
+    };
+
+    // Function to remove a hobby input field
+    const removeHobbyField = (index) => {
+      const newHobbies = hobbies.filter((_, i) => i !== index);
+      setHobbies(newHobbies);
+    };
+
+    // Function to handle form submission
+    const handleSubmit = (event) => {
+      event.preventDefault();
+      console.log("Hobbies:", hobbies);
+    };
+
+    return (
+      <form onSubmit={handleSubmit}>
+        <h3>Enter Your Hobbies</h3>
+        {hobbies.map((hobby, index) => (
+          <div key={index} style={{ marginBottom: "10px" }}>
+            <input
+              type="text"
+              placeholder="Enter a hobby"
+              value={hobby}
+              onChange={(event) => handleHobbyChange(index, event)}
+              required
+            />
+            {index > 0 && (
+              <button type="button" onClick={() => removeHobbyField(index)}>
+                Remove
+              </button>
+            )}
+          </div>
+        ))}
+        <button type="button" onClick={addHobbyField}>
+          Add Hobby
+        </button>
+        <br />
+        <button type="submit">Submit</button>
+      </form>
+    );
+  };
+
+  const root = ReactDOM.createRoot(document.getElementById("root"));
+  root.render(<DynamicHobbiesForm />);
+</script>
+
+</html>
