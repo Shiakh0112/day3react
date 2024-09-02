@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Generator</title>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script src="https://www.unpkg.com/react@18.2.0/umd/react.development.js"></script>
+  <script src="https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    const App = () => {
+      const [message, setMessage] = React.useState("");
+      const validChars = "1234567890abcdefABCDEF"; // Valid characters for a HEX code
+
+      function InterInput(event) {
+        const value = event.target.value;
+        setMessage(value);
+
+        // Check if the input is empty
+        if (value === "") {
+          document.body.style.backgroundColor = ""; // Reset background color
+          return;
+        }
+
+        // Check if value starts with '#' and has exactly 7 characters
+        if (value[0] === "#" && value.length === 7) {
+          // Validate each character
+          let isValid = true;
+          for (let i = 1; i < value.length; i++) {
+            if (!validChars.includes(value[i])) {
+              isValid = false;
+              break;
+            }
+          }
+
+          if (isValid) {
+            document.body.style.backgroundColor = value;
+          } else {
+            console.log("Please enter a valid HEX color code.");
+          }
+        } else {
+          console.log("Please enter a valid HEX color code.");
+        }
+      }
+
+      return (
+        <>
+          <input
+            type="text"
+            value={message}
+            onChange={InterInput}
+            placeholder="Enter HEX color code"
+            style={{ padding: "10px", fontSize: "16px" }}
+          />
+        </>
+      );
+    };
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<App />);
+  </script>
+</body>
+
+</html>
