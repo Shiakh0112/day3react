@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #input-container {
+      width: 50%;
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      padding: 20px;
+      gap: 10px;
+      margin: auto;
+      border: 1px solid black;
+      margin: auto;
+    }
+
+    #input-container>input {
+      margin: auto;
+      width: 90%;
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    #input-container>button {
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    #input-container>button:hover {
+      background-color: #45a049;
+    }
+
+    table {
+      width: 50%;
+      margin: 20px auto;
+      border-collapse: collapse;
+    }
+
+    table,
+    th,
+    td {
+      border: 1px solid black;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .delete-btn {
+      padding: 5px 10px;
+      background-color: red;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .delete-btn:hover {
+      background-color: darkred;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root">
+
+  </div>
+
+  <script src="https://www.unpkg.com/react@18.2.0/umd/react.development.js"></script>
+  <script src="https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+
+    const Todo = () => {
+      const [todo, setTodo] = React.useState("")
+      const [user, setUser] = React.useState("")
+      const [data, setData] = React.useState([])
+      const HandleTodo = (e) => {
+        setTodo(e.target.value)
+
+      }
+      const HandleUser = (e) => {
+        setUser(e.target.value)
+
+      }
+
+      const HandleSave = () => {
+        const obj = {
+          todo,
+          user
+        }
+        setData((prev) => [...prev, obj])
+        setTodo("")
+        setUser("")
+      }
+
+      const HandleDelete = (index) => {
+        setData(data.filter((_, i) => i !== index));
+      }
+      return (
+        <>
+          <div id="input-container">
+            <input type="text" onChange={HandleTodo} placeholder="enter todo" />
+            <input type="text" onChange={HandleUser} placeholder="enter User name" />
+            <button onClick={HandleSave} >Save Todo</button>
+          </div>
+          <table>
+            <thead>
+
+              <tr>
+                <th>Sr.No</th>
+                <th>Todo</th>
+                <th>User</th>
+                <th>Action</th>
+              </tr>
+
+            </thead>
+            <tbody>
+              {
+                data.map((ele, i) => (
+                  <tr key={i}>
+                    <td>{i + 1} </td>
+                    <td>{ele.todo} </td>
+                    <td>{ele.user} </td>
+                    <td> <button className="delete-todo" onClick={() => HandleDelete(i)}>  Delete</button> </td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+
+        </>
+      )
+    }
+
+    const App = () => {
+      return (
+        <>
+          <Todo />
+        </>
+      )
+    }
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<App />)
+
+  </script>
+</body>
+
+</html>

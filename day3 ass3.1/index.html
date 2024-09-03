@@ -16,38 +16,74 @@
   <script type="text/babel">
     const App = () => {
       const [message, setMessage] = React.useState("");
+      const [boxColor, setBoxColor] = React.useState(""); // State to hold box color
       const validChars = "1234567890abcdefABCDEF"; // Valid characters for a HEX code
 
-      function InterInput(event) {
-        const value = event.target.value;
+      function InterInput(e) {
+
+        const value = e.target.value;
         setMessage(value);
 
-        // Check if the input is empty
+
         if (value === "") {
-          document.body.style.backgroundColor = ""; // Reset background color
+          setBoxColor("")
           return;
+
         }
 
-        // Check if value starts with '#' and has exactly 7 characters
-        if (value[0] === "#" && value.length === 7) {
-          // Validate each character
-          let isValid = true;
+        if (value[0] === "#" && value.length <= 7) {
+          let isvalid = true;
+
           for (let i = 1; i < value.length; i++) {
-            if (!validChars.includes(value[i])) {
-              isValid = false;
+            if (!isvalid.includes === value[i]) {
+              isvalid = false;
               break;
             }
-          }
+            if (isvalid) {
+              setBoxColor(value);
+            } else {
+              console.log("Please enter a valid HEX color code.");
+            }
 
-          if (isValid) {
-            document.body.style.backgroundColor = value;
-          } else {
-            console.log("Please enter a valid HEX color code.");
           }
         } else {
           console.log("Please enter a valid HEX color code.");
         }
+
       }
+
+
+
+      // function InterInput(event) {
+      //   const value = event.target.value;
+      //   setMessage(value);
+
+      //   // Check if the input is empty
+      //   if (value === "") {
+      //     setBoxColor(""); // Reset box color
+      //     return;
+      //   }
+
+      //   // Check if value starts with '#' and has exactly 7 characters
+      //   if (value[0] === "#" && value.length <= 7) {
+      //     // Validate each character
+      //     let isValid = true;
+      //     for (let i = 1; i < value.length; i++) {
+      //       if (!validChars.includes(value[i])) {
+      //         isValid = false;
+      //         break;
+      //       }
+      //     }
+
+      //     if (isValid) {
+      //       setBoxColor(value); // Set the box color
+      //     } else {
+      //       console.log("Please enter a valid HEX color code.");
+      //     }
+      //   } else {
+      //     console.log("Please enter a valid HEX color code.");
+      //   }
+      // }
 
       return (
         <>
@@ -58,6 +94,16 @@
             placeholder="Enter HEX color code"
             style={{ padding: "10px", fontSize: "16px" }}
           />
+          <div
+            className="Box"
+            style={{
+              width: "100px",
+              height: "100px",
+              backgroundColor: boxColor,
+              marginTop: "20px",
+              border: "1px solid #000",
+            }}
+          ></div>
         </>
       );
     };
