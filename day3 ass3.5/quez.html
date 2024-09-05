@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  .body {
+    font-family: sans-serif;
+  }
+
+  .quiz {
+    width: 50%;
+    margin: auto;
+    text-align: center;
+    padding: 50px;
+    border: 1px solid black;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+
+  }
+
+
+  .question {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    text-align: center;
+  }
+
+  .data-container p {
+    width: 100%;
+    margin: auto;
+    text-align: center;
+    font-size: 25px;
+    word-spacing: 2px;
+    margin: 30px;
+    padding: 30px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
+
+  .options-data {
+    width: 100%;
+    text-align: center;
+    margin: auto;
+  }
+
+  .option-btn {
+    width: 100%;
+    margin: 10px;
+    border: none;
+    /* background: none; */
+    padding: 10px;
+    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+  }
+
+
+  .option-btn {
+    width: 100%;
+    appearance: none;
+    background-color: #FFFFFF;
+    border-radius: 40em;
+    border-style: none;
+    box-shadow: #ecf1f8 0 -12px 6px inset;
+    box-sizing: border-box;
+    color: #000000;
+    cursor: pointer;
+    display: inline-block;
+    font-family: -apple-system, sans-serif;
+    font-weight: 400;
+    letter-spacing: -.24px;
+    margin: 10px;
+    outline: none;
+    padding: 1rem 1.3rem;
+    quotes: auto;
+    text-align: center;
+    text-decoration: none;
+    transition: all .5s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+
+  .option-btn:hover {
+    background-color: hwb(330 54% 45% / 0.491);
+    box-shadow: #828384 0 -6px 8px inset;
+    transform: scale(1.125);
+  }
+
+  .active {
+    background-color: #5154558a;
+    /* Active color */
+    box-shadow: 0 0 10px rgba(44, 43, 43, 0.2);
+    color: rgba(255, 255, 255, 0.797);
+    /* Text color change when active */
+  }
+
+  .option-btn:active {
+    transform: scale(1.025);
+  }
+
+  @media (min-width: 768px) {
+    .option-btn {
+      font-size: 1.5rem;
+      padding: .75rem 2rem;
+    }
+  }
+
+  .next-btn {
+    align-items: center;
+    appearance: none;
+    background-color: #fff;
+    border-radius: 24px;
+    border-style: none;
+    box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px, rgba(0, 0, 0, .14) 0 6px 10px 0, rgba(0, 0, 0, .12) 0 1px 18px 0;
+    box-sizing: border-box;
+    color: #3c4043;
+    cursor: pointer;
+    display: inline-flex;
+    fill: currentcolor;
+    font-family: "Google Sans", Roboto, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    height: 48px;
+    justify-content: center;
+    letter-spacing: .25px;
+    line-height: normal;
+    max-width: 100%;
+    overflow: visible;
+    padding: 2px 24px;
+    margin: 10px;
+    position: relative;
+    text-align: center;
+    text-transform: none;
+    transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1), opacity 15ms linear 30ms, transform 270ms cubic-bezier(0, 0, .2, 1) 0ms;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: auto;
+    will-change: transform, opacity;
+    z-index: 0;
+  }
+
+  .next-btn:hover {
+    background: #F6F9FE;
+    color: #174ea6;
+  }
+
+  .next-btn:active {
+    box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%), 0 8px 12px 6px rgb(60 64 67 / 15%);
+    outline: none;
+  }
+
+  .next-btn:focus {
+    outline: none;
+    border: 2px solid #4285f4;
+  }
+
+  .next-btn:not(:disabled) {
+    box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+  }
+
+  .next-btn:not(:disabled):hover {
+    box-shadow: rgba(60, 64, 67, .3) 0 2px 3px 0, rgba(60, 64, 67, .15) 0 6px 10px 4px;
+  }
+
+  .next-btn:not(:disabled):focus {
+    box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+  }
+
+  .next-btn:not(:disabled):active {
+    box-shadow: rgba(60, 64, 67, .3) 0 4px 4px 0, rgba(60, 64, 67, .15) 0 8px 12px 6px;
+  }
+
+  .next-btn:disabled {
+    box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+  }
+
+  .result {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+
+  .result p {
+    font-size: 20px;
+  }
+
+  #play-again-btn {
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 10px;
+  }
+</style>
+
+<body>
+
+  <div id="root"></div>
+  <script src="https://www.unpkg.com/react@18.2.0/umd/react.development.js"></script>
+  <script src="https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+
+    const Result = (props) => {
+
+      return (
+        <>
+          <div class="result">
+            <p><b>Your score: </b>{props.score} </p><br />
+            <p><b>Total score: </b>{props.totalScore} </p>
+            <button id="play-again-btn" onClick={props.TryAgain}>Play again </button>
+          </div>
+        </>
+      )
+    }
+    const Quiz = ({ QuizData }) => {
+
+      const [currentQuestion, setCurrentQuestion] = React.useState(0)
+
+      const [score, setScore] = React.useState(0)
+      const [clickOption, setClickOption] = React.useState(0)
+      const [showResult, setShowResult] = React.useState(false)
+      const ChangeQuestion = () => {
+        UpDateAnswer()
+        if (currentQuestion < QuizData.length - 1) {
+
+          setCurrentQuestion(currentQuestion + 1)
+          setClickOption(0)
+        } else {
+          setShowResult(true)
+        }
+      }
+      const UpDateAnswer = () => {
+        if (clickOption === QuizData[currentQuestion].answer) {
+          setScore(score + 1)
+
+
+
+        }
+      }
+      const Reset = () => {
+        setShowResult(false)
+        setCurrentQuestion(0)
+        setScore(0)
+        setClickOption(0)
+      }
+      return (
+
+        <>
+
+
+          <div className="quiz">
+            <h2>Quiz App</h2>
+            {
+              showResult ? (<Result score={score} totalScore={QuizData.length} TryAgain={Reset} />) : (<>
+
+
+                <div className="data-container">
+                  <div class="question">
+                    <p><b>Q.{QuizData[currentQuestion].id}:</b> {QuizData[currentQuestion].question}</p>
+                  </div>
+
+
+                  {
+                    QuizData[currentQuestion].options.map((option, i) => {
+
+                      return (
+                        <div class="options-data  " key={i}>
+                          <button className={`option-btn ${clickOption === i + 1 ? 'active' : ''}`} role="button" onClick={() => setClickOption(i + 1)} >{option} </button>
+                        </div>
+                      )
+                    })
+
+                  }
+                </div>
+                <input type="button" value="Next" className="next-btn" onClick={ChangeQuestion} />
+
+              </>
+
+              )
+            }
+
+          </div>
+        </>
+
+      )
+    }
+
+
+    const App = () => {
+      const quizQuestions = [
+        {
+
+          id: 1,
+          question: "What does HTML stand for?",
+          options: ["Hyper Text Markup Language", "Home Tool Markup Language", "Hyperlinks and Text Markup Language", "Hyper Tool Markup Language"],
+          answer: 1
+        },
+        {
+          id: 2,
+          question: "Which of the following is a JavaScript framework?",
+          options: ["Laravel", "Django", "React", "Ruby on Rails"],
+          answer: 3
+        },
+        {
+          id: 3,
+          question: "What does CSS stand for?",
+          options: ["Cascading Style Sheets", "Creative Style System", "Colorful Style Sheets", "Computer Style Sheets"],
+          answer: 1
+        },
+        {
+          id: 4,
+          question: "Which HTML tag is used to define an internal style sheet?",
+          options: ["<style>", "<script>", "<link>", "<css>"],
+          answer: 1
+        },
+        {
+          id: 5,
+          question: "Which of the following is used to add interactivity to a website?",
+          options: ["HTML", "CSS", "JavaScript", "SQL"],
+          answer: 3
+        },
+        {
+          id: 6,
+          question: "What is the correct syntax for linking an external CSS file?",
+          options: ['<link rel="stylesheet" href="styles.css">', '<style src="styles.css">', '<css link="styles.css">', '<link css="styles.css">'],
+          answer: 1
+        },
+        {
+          id: 7,
+          question: "Which CSS property is used to change the text color of an element?",
+          options: ["font-color", "text-color", "color", "background-color"],
+          answer: 3
+        },
+        {
+          id: 8,
+          question: "Which JavaScript method is used to write HTML content to the document?",
+          options: ["document.write()", "document.createElement()", "document.appendChild()", "document.getElementById()"],
+          answer: 1
+        },
+        {
+          id: 9,
+          question: "Which of the following is not a JavaScript data type?",
+          options: ["String", "Number", "Boolean", "Float"],
+          answer: 4
+        },
+        {
+          id: 10,
+          question: "What is the purpose of the 'alt' attribute in an <img> tag?",
+          options: ["To specify the image source", "To provide alternative text for an image", "To set the image size", "To link the image to another page"],
+          answer: 2
+        }
+      ];
+
+
+      return (
+        <Quiz QuizData={quizQuestions} />
+      )
+    }
+
+
+    const root = ReactDOM.createRoot(document.getElementById("root"))
+    root.render(<App />)
+  </script>
+</body>
+
+</html>
