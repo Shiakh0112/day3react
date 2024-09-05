@@ -14,9 +14,51 @@
 <script src="https://www.unpkg.com/react@18.2.0/umd/react.development.js"></script>
 <script src="https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<!-- <script type="text/babel">
+  const HobbiesField = () => {
+    const [user, setUser] = React.useState([{ name: "", email: "" }]);
+
+    return (
+      <>
+        <div class="hobbies">
+          <form onSubmit={onSubmit}>
+            {
+              user.map((items, i) => {
+                <>
+
+
+                  <label for="name">Name</label>
+                  <input type="text" name="name" id="name" value={items.name} />
+
+                  <label for="email">Email</label>
+                  <input type="email" name="email" id="email" value={items.email} />
+                  <button type="submit"></button>
+                </>
+              })
+            }
+
+          </form>
+
+        </div>
+      </>
+    )
+  }
+  const App = () => {
+    return
+    (
+      <>
+        <HobbiesField />
+      </>
+    )
+  }
+
+  const root = ReactDOM.createRoot(document.getElementById("root"));
+  root.render(<App />);
+</script> -->
+
 <script type="text/babel">
   const DynamicHobbiesForm = () => {
-    const [hobbies, setHobbies] = React.useState([""]);
+    const [hobbies, setHobbies] = React.useState(["",]);
 
     // Function to handle hobby input change
     const handleHobbyChange = (index, event) => {
@@ -46,6 +88,7 @@
       <form onSubmit={handleSubmit}>
         <h3>Enter Your Hobbies</h3>
         {hobbies.map((hobby, index) => (
+          <>
           <div key={index} style={{ marginBottom: "10px" }}>
             <input
               type="text"
@@ -58,8 +101,12 @@
               <button type="button" onClick={() => removeHobbyField(index)}>
                 Remove
               </button>
+
+              
             )}
           </div>
+          
+          </>
         ))}
         <button type="button" onClick={addHobbyField}>
           Add Hobby
